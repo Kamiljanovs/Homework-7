@@ -74,11 +74,11 @@ def select_products_by_limits(connection, price, quantity):
 
 
 
-def search_by_title(connection):
-    sql = '''SELECT * FROM products WHERE product_title LIKE ('%мыло%') '''
+def search_by_title(connection, product_title):
+    sql = '''SELECT * FROM products WHERE product_title LIKE ? '''
     try:
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, ('%' + product_title + '%', ))
         rows_list = cursor.fetchall()
 
         for row in rows_list:
@@ -121,7 +121,7 @@ if my_connection is not None:
      # delete_product(my_connection, 10)
      # select_all_products(my_connection)
      # select_products_by_limits(my_connection, 100, 15)
-     # search_by_title(my_connection)
+     # search_by_title(my_connection, 'мыло')
      my_connection.close()
 
 
