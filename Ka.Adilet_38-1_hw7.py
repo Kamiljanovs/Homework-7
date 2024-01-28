@@ -60,17 +60,18 @@ def select_all_products(connection):
         print(e)
 
 
-def select_products_by_limits(connection):
-    sql = '''SELECT * FROM products WHERE price < 100 AND quantity > 15'''
+def select_products_by_limits(connection, price, quantity):
+    sql = '''SELECT * FROM products WHERE price < ? AND quantity > ?'''
     try:
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (price, quantity))
         rows_list = cursor.fetchall()
 
         for row in rows_list:
             print(row)
     except sqlite3.Error as e:
         print(e)
+
 
 
 def search_by_title(connection):
@@ -119,7 +120,7 @@ if my_connection is not None:
      # update_product(my_connection, (40, 80, 15))
      # delete_product(my_connection, 10)
      # select_all_products(my_connection)
-     # select_products_by_limits(my_connection)
+     # select_products_by_limits(my_connection, 100, 15)
      # search_by_title(my_connection)
      my_connection.close()
 
